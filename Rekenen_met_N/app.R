@@ -1,41 +1,32 @@
-#
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-
 library(shiny)
-
+library(e1071)
 
 histsom <- function(A_m,A_s,B_m,B_s) {
   
      A <- rnorm(1000, mean=A_m, sd=A_s)
      B <- rnorm(1000, mean=B_m, sd=B_s)
-     return(hist(A+B))
+     return(A+B)
 }
 
 histmin <- function(A_m,A_s,B_m,B_s) {
   
      A <- rnorm(1000, mean=A_m, sd=A_s)
      B <- rnorm(1000, mean=B_m, sd=B_s)
-     return(hist(A-B))
+     return(A-B)
 }
 
 histkeer <- function(A_m,A_s,B_m,B_s) {
   
      A <- rnorm(1000, mean=A_m, sd=A_s)
      B <- rnorm(1000, mean=B_m, sd=B_s)
-     return(hist(A*B))
+     return(A*B)
 }
 
 histdeel <- function(A_m,A_s,B_m,B_s) {
   
      A <- rnorm(1000, mean=A_m, sd=A_s)
      B <- rnorm(1000, mean=B_m, sd=B_s)
-     return(hist(A/B))
+     return(A/B)
 }
 
 # Define UI for application that draws a histogram
@@ -59,8 +50,9 @@ ui <- fluidPage(
       
       # Show a plot of the generated distribution
       mainPanel(
-#         plotOutput("distPlot")
-        plotOutput("histsom")
+         plotOutput("distplot"),
+        tableOutput("ndata")
+
       )
    )
 )
@@ -68,7 +60,7 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
   
-  output$histsom <- renderPlot({
+  C <- reactive({
     if(input$berekening=="A+B") {
     histsom(input$A_m, input$A_s, input$B_m, input$B_s)
     }
@@ -82,19 +74,19 @@ server <- function(input, output) {
     histdeel(input$A_m, input$A_s, input$B_m, input$B_s)
     }
   })
-   
-#   output$histsom <- renderPlot({
-#     A_m <- input$A_m
-#     A_s <- input$A_s
-#     B_m <- input$B_m
-#     B_s <- input$B_s
-     
-#     A <- rnorm(1000, mean=A_m, sd=A_s)
-#     B <- rnorm(1000, mean=B_m, sd=B_s)
-#     distPlot <- hist(A+B)
-#     hist(A+B)
+  
+  output$distplot <- renderPlot({
+    hist(C())
+  })
+  
+  output$ndata <- renderTable({
+   data.frame(Gemiddelde = mean(C()),
+               Stdev = sd(C()),
+                 Var = var(C()),
+               kurtosis = kurtosis(C(), type=2),
+               Skewness = skewness(C(), type=2))
+  }) 
           
-#   })
 }
 
 # Run the application 
