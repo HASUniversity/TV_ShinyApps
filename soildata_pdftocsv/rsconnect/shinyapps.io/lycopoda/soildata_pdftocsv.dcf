@@ -1,0 +1,12 @@
+name: soildata_pdftocsv
+title: soildata_pdftocsv
+username:
+account: lycopoda
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2281622
+bundleId: 3133262
+url: https://lycopoda.shinyapps.io/soildata_pdftocsv/
+when: 1589225666.10688
+asMultiple: FALSE
+asStatic: FALSE

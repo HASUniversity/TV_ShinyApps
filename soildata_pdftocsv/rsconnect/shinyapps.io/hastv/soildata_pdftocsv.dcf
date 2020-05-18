@@ -1,0 +1,13 @@
+name: soildata_pdftocsv
+title: soildata_pdftocsv
+username:
+account: hastv
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2281940
+bundleId: 3137325
+url: https://hastv.shinyapps.io/soildata_pdftocsv/
+when: 1589295212.0205
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: test.csv

@@ -1,0 +1,12 @@
+name: Toad
+title: Toad
+username:
+account: hastv
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2309115
+bundleId: 3155958
+url: https://hastv.shinyapps.io/Toad/
+when: 1589656998.72889
+asMultiple: FALSE
+asStatic: FALSE
