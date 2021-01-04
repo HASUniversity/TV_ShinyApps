@@ -1,0 +1,12 @@
+name: StandNorm
+title: StandNorm
+username:
+account: hastv
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3440687
+bundleId: 4054430
+url: https://hastv.shinyapps.io/StandNorm/
+when: 1609713612.47691
+asMultiple: FALSE
+asStatic: FALSE
