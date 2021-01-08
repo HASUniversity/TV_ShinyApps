@@ -1,6 +1,7 @@
 source("labpdfreader.R")
 library(shiny)
 library(readxl)
+library(writexl)
 
 #Get parameterdata
 param <- read_excel("parameters.xlsx") %>% 
@@ -21,14 +22,15 @@ ui <- fluidPage(
         selectInput("lab", "Which lab?", choices = unique(param$lab)),
         fileInput("filelist", "pdf-files", multiple = TRUE, 
                   accept = "*.pdf|*.PDF"),
-        downloadButton("downloadData", "Download")
+        downloadButton("download_Excel", "Download als Excel"),
+        downloadButton("download_csv", "Download als CSV")
       ),
       
      
       mainPanel(
         p("With this app you can extract data from soil analyses,
         in pdf-format from the main Dutch labs."),
-        p("The output format is csv."),
+        p("The output format is either Excel or csv."),
         p("For questions, comments or requests: send an email to m.smits@has.nl."),
         verbatimTextOutput(outputId = "tekst")
       )
@@ -62,7 +64,16 @@ server <- function(session, input, output) {
       else ("Status: Download results. \nIf needed select other files and/or lab.")
     })
    
-    output$downloadData <- downloadHandler(
+    output$download_Excel <- downloadHandler(
+        filename = function() {
+          paste0("labdata", Sys.Date(), ".xlsx")
+        },
+        content = function(file) {
+          write_xlsx(df(), file)
+        }
+        )
+    
+    output$download_csv <- downloadHandler(
         filename = function() {
           paste0("labdata", Sys.Date(), ".csv")
         },
@@ -70,8 +81,8 @@ server <- function(session, input, output) {
           write.csv(df(), file)
         }
         )
+    
 }
 
 # Run the application 
 shinyApp(ui = ui, server = server)
-
